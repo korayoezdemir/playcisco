@@ -1,0 +1,51 @@
+- hosts: localhost
+  gather_facts: no
+  vars:
+    hostname: "Switch"
+    vlans:
+      - id: 10
+        description: "MASCHINE"
+        ip_address: "192.168.10.1"
+        subnet_mask: "255.255.255.192"
+      - id: 20
+        description: "ENTWICKLUNG"
+        ip_address: "192.168.10.65"
+        subnet_mask: "255.255.255.224"
+      - id: 30
+        description: "VERWALTUNG"
+        ip_address: "192.168.11.0"
+        subnet_mask: "255.255.255.0"
+    interfaces:
+      - name: "GigabitEthernet1/0/1"
+        description: "UPLINK"
+        mode: "trunk"
+        vlan: 10
+      - name: "GigabitEthernet1/0/2"
+        description: "MASCHINE 1"
+        mode: "trunk"
+        vlan: 10
+      - name: "GigabitEthernet1/0/3"
+        description: "MASCHINE 2"
+        mode: "trunk"
+        vlan: 10
+      - name: "GigabitEthernet1/0/4"
+        description: "ENTWICKLUNG 1"
+        mode: "trunk"
+        vlan: 20
+      - name: "GigabitEthernet1/0/5"
+        description: "ENTWICKLUNG 2"
+        mode: "trunk"
+        vlan: 20
+      - name: "GigabitEthernet1/0/6"
+        description: "VERWALTUNG 1"
+        mode: "trunk"
+        vlan: 30
+      - name: "GigabitEthernet1/0/7"
+        description: "VERWALTUNG 2"
+        mode: "trunk"
+        vlan: 30
+  tasks:
+    - name: Generate Configuration from Template
+      template:
+        src: main_template.j2
+        dest: "./config.txt"

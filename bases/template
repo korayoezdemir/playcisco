@@ -1,0 +1,66 @@
+! Beginne mit der Konfiguration
+enable
+configure terminal
+
+! Definiere VLANs und deren Namen
+vlan 10
+name Marketing
+exit
+
+vlan 20
+name Finance
+exit
+
+vlan 30
+name HR
+exit
+
+vlan 40
+name IT
+exit
+
+! Konfiguriere VLAN-Interfaces mit IP-Adressen
+interface vlan 10
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+exit
+
+interface vlan 20
+ip address 192.168.2.1 255.255.255.0
+no shutdown
+exit
+
+interface vlan 30
+ip address 192.168.3.1 255.255.255.0
+no shutdown
+exit
+
+interface vlan 40
+ip address 192.168.4.1 255.255.255.0
+no shutdown
+exit
+
+! Konfiguriere die Switchports für die VLANs
+interface range GigabitEthernet0/1 - 2
+switchport mode access
+switchport access vlan 10
+exit
+
+interface range GigabitEthernet0/3 - 4
+switchport mode access
+switchport access vlan 20
+exit
+
+interface range GigabitEthernet0/5 - 6
+switchport mode access
+switchport access vlan 30
+exit
+
+interface range GigabitEthernet0/7 - 8
+switchport mode access
+switchport access vlan 40
+exit
+
+! Speichere die Konfiguration
+end
+write memory
